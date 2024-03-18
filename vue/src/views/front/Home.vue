@@ -210,7 +210,8 @@ export default {
             console.log("获得地名失败")
             resolve();
           });
-        } else {
+        }
+        else {
           this.locationName = null
           console.log("获得地名失败")
           resolve();

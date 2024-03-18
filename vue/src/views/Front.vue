@@ -16,6 +16,7 @@
             <el-menu-item index="/front/allBlog">全部讨论</el-menu-item>
             <el-menu-item index="/front/activity">活动中心</el-menu-item>
 						<el-menu-item index="/front/person">个人中心</el-menu-item>
+            <el-menu-item index="/front/diskHome">个人网盘</el-menu-item>
           </el-menu>
         </div>
       </div>

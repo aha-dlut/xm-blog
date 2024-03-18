@@ -39,7 +39,7 @@ const routes = [
     name: 'Front',
     component: () => import('../views/Front.vue'),
     children: [
-      { path: 'home', name: 'FHome', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
+      { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
       { path: 'blogDetail', name: 'BlogDetail', meta: { name: '博客详情' }, component: () => import('../views/front/BlogDetail') },
       { path: 'search', name: 'Search', meta: { name: '博客搜索' }, component: () => import('../views/front/Search') },
@@ -49,6 +49,8 @@ const routes = [
       { path: 'notice', name: 'Notice', meta: { name: '通知公告' }, component: () => import('../views/front/Notice') },
       { path: 'noticeDetail', name: 'NoticeDetail', meta: { name: '公告详情' }, component: () => import('../views/front/NoticeDetail') },
       { path: 'allBlog', name: 'AllBlog', meta: { name: '全部讨论' }, component: () => import('../views/front/AllBlog') },
+      { path: 'diskHome', name: 'DishHome', meta: { name: '个人网盘' }, component: () => import('../views/front/DiskHome') },
+      { path: 'openShare', name: 'OpenShare', meta: { name: '分享文件' }, component: () => import('../views/front/OpenShare') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },

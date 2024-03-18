@@ -20,4 +20,14 @@
 .el-icon-eye:before {
   content: "\ec86";
 }
+.el-icon-file:before {
+  content: "\eac4";
+}
+.el-icon-zip:before {
+  content: "\e625";
+}
+
+.el-icon-jpg:before {
+  content: "\e61a";
+}
 
