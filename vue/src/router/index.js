@@ -31,6 +31,7 @@ const routes = [
       { path: 'diskFiles', name: 'DiskFiles', meta: { name: '网盘文件' }, component: () => import('../views/manager/DiskFiles') },
       { path: 'share', name: 'Share', meta: { name: '文件分享' }, component: () => import('../views/manager/Share') },
       { path: 'trash', name: 'Trash', meta: { name: '垃圾箱' }, component: () => import('../views/manager/Trash') },
+      { path: 'goods', name: 'Goods', meta: { name: '商品管理' }, component: () => import('../views/manager/goods') },
 
     ]
   },
@@ -51,6 +52,7 @@ const routes = [
       { path: 'allBlog', name: 'AllBlog', meta: { name: '全部讨论' }, component: () => import('../views/front/AllBlog') },
       { path: 'diskHome', name: 'DishHome', meta: { name: '个人网盘' }, component: () => import('../views/front/DiskHome') },
       { path: 'openShare', name: 'OpenShare', meta: { name: '分享文件' }, component: () => import('../views/front/OpenShare') },
+      { path: 'Source', name: 'Source', meta: { name: '资料文件' }, component: () => import('../views/front/Source') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },

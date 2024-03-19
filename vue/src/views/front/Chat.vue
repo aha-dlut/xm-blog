@@ -112,7 +112,7 @@ export default {
       if (msg.data) {
         let message = JSON.parse(msg.data)
         this.messages.push(message)
-        console.log(msg.data)
+
         this.scrollToBottom()
       }
     }

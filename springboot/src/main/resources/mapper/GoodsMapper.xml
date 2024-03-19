@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GoodsMapper">
+
+    <insert id="insert" parameterType="com.example.entity.Goods" useGeneratedKeys="true" keyProperty="id">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="price != null">price,</if>
+            <if test="descr != null">descr,</if>
+            <if test="cover != null">cover,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="association != null">association,</if>
+            <if test="date != null">date,</if>
+            <if test="sell != null">sell,</if>
+            <if test="type != null">type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="price != null">#{price},</if>
+            <if test="descr != null">#{descr},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="association != null">#{association},</if>
+            <if test="date != null">#{date},</if>
+            <if test="sell != null">#{sell},</if>
+            <if test="type != null">#{type},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        delete
+        from goods
+        where id = #{id}
+    </delete>
+
+    <select id="selectById" resultType="com.example.entity.Goods">
+        select
+           *
+        from goods
+        where id = #{id}
+    </select>
+
+
+    <select id="selectAll" resultType="com.example.entity.Goods">
+        select
+        goods.*,user.name as userName
+        from goods
+        left join user
+        on goods.user_id = user.id
+        <where>
+            <if test="name != null">and goods.name like concat('%', #{name}, '%')</if>
+            <if test="type != null">and goods.type like concat('%', #{type}, '%')</if>
+            <if test="userName != null">and user.name like concat('%', #{userName}, '%')</if>
+            <if test="userId != null">and user.id = #{userId}</if>
+        </where>
+        order by goods.id desc
+    </select>
+
+    <update id="updateById" parameterType="com.example.entity.Goods">
+        update goods
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="descr != null">
+                descr = #{descr},
+            </if>
+            <if test="cover != null">
+                cover = #{cover},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="association != null">
+                association = #{association},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="sell != null">
+                sell = #{sell},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

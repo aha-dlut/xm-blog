@@ -2,11 +2,11 @@
   <div class="main-content">
     <div style="display: flex; align-items: flex-start; grid-gap: 10px;">
 
-      <div style="display: flex">
-        <div style="font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i
+      <div style="display: flex;flex-direction: column">
+        <div style="display: flex;font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i
             class="el-icon-refresh"></i> 重新定位
         </div>
-        <div id="he-plugin-standard"></div>
+        <div id="he-plugin-standard" style="display: flex"></div>
       </div>
 
       <!--      <div style="width: 150px" class="card">-->
@@ -137,8 +137,8 @@ export default {
         window.WIDGET = {
           "CONFIG": {
             "layout": "2",
-            "width": 50,
-            "height": 50,
+            "width": 200,
+            "height": 200,
             "background": "1",
             "dataColor": "FFFFFF",
             "borderRadius": "20",
