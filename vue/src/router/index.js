@@ -53,6 +53,7 @@ const routes = [
       { path: 'diskHome', name: 'DishHome', meta: { name: '个人网盘' }, component: () => import('../views/front/DiskHome') },
       { path: 'openShare', name: 'OpenShare', meta: { name: '分享文件' }, component: () => import('../views/front/OpenShare') },
       { path: 'Source', name: 'Source', meta: { name: '资料文件' }, component: () => import('../views/front/Source') },
+      { path: 'goods', name: 'Goods', meta: { name: '二手市场' }, component: () => import('../views/front/Goods') },
     ]
   },
   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },

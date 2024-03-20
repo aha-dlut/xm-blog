@@ -18,6 +18,7 @@
 						<el-menu-item index="/front/person">个人中心</el-menu-item>
             <el-menu-item index="/front/diskHome">个人网盘</el-menu-item>
             <el-menu-item index="/front/Source">文件资料</el-menu-item>
+            <el-menu-item index="/front/goods">二手市场</el-menu-item>
           </el-menu>
         </div>
       </div>

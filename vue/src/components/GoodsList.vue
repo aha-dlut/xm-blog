@@ -1,65 +1,62 @@
 <template>
-  <div>
+  <div style=" width: 90%;
+    margin: 5px auto;">
 
     <div class="search">
       <el-input placeholder="请输入商品名查询" style="width: 200px; margin-right: 10px" v-model="name"></el-input>
-      <el-input placeholder="请输入分类查询" style="width: 200px; margin-right: 10px" v-model="type"></el-input>
-      <el-input placeholder="请输入卖家名称查询" style="width: 200px" v-model="userName"></el-input>
       <el-button type="info" plain style="margin-left: 10px" @click="load(1)">查询</el-button>
       <el-button type="warning" plain style="margin-left: 10px" @click="reset">重置</el-button>
+      <el-button type="primary" v-if="type==='user'" plain @click="add">新增</el-button>
     </div>
 
-    <div class="operation">
-      <el-button type="primary" plain @click="add">新增</el-button>
-      <el-button type="danger" plain @click="delBatch">批量删除</el-button>
-    </div>
-
-
-    <div class="table">
-      <el-table :data="tableData" strip @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="序号" width="70" align="center" sortable></el-table-column>
-        <el-table-column prop="name" label="商品名" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="cover" label="封面">
-          <template v-slot="scope">
-            <div style="display: flex; align-items: center">
-              <el-image style="width: 50px; height: 50px; border-radius: 5px" v-if="scope.row.cover"
-                        :src="scope.row.cover" :preview-src-list="[scope.row.cover]"></el-image>
+    <el-row :gutter="10" v-if="total" style="padding-top: 10px">
+      <el-col :span="span" v-for="item in tableData" :key="item.id">
+        <div class="card" style="margin-bottom: 10px" @click="goDetail(item.id)">
+          <img :src="item.cover" alt="" style="width: 100%; height: 200px; border-radius: 5px">
+          <div style="margin: 10px 0; font-weight: bold">{{ item.name }}</div>
+          <div style="display: flex; align-items: center">
+            <div style="flex: 1; color: #666"><i class="el-icon-date"></i> {{ item.date }}</div>
+            <div style=" padding-right: 2px;color: #e50f0f">￥{{ item.price }}</div>
+            <div v-if="type==='user'">
+              <el-button size="mini" type="primary" plain @click="handleEdit(item)">编辑</el-button>
+              <el-button v-if="item.sell" size="mini" type="warning" plain @click="handleSoldChange(item)">下架
+              </el-button>
+              <el-button v-else size="mini" type="primary" plain @click="handleSoldChange(item)">上架</el-button>
             </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="type" label="分类"></el-table-column>
-
-        <el-table-column prop="userName" label="发布人"></el-table-column>
-        <el-table-column prop="date" label="发布日期"></el-table-column>
-        <el-table-column label="查看商品描述">
-          <template v-slot="scope">
-            <el-button @click="preview(scope.row.descr)">查看</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" width="300">
-          <template v-slot="scope">
-            <el-button v-if="scope.row.sell" size="mini" type="warning" plain @click="handleSoldChange(scope.row)">下架
-            </el-button>
-            <el-button v-else size="mini" type="primary" plain @click="handleSoldChange(scope.row)">上架</el-button>
-            <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" plain @click="del(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div class="pagination">
-        <el-pagination
-            background
-            @current-change="handleCurrentChange"
-            :current-page="pageNum"
-            :page-sizes="[5, 10, 20]"
-            :page-size="pageSize"
-            layout="total, prev, pager, next"
-            :total="total">
-        </el-pagination>
-      </div>
+            <div v-else>
+              <el-button type="primary" @click="preview(item)" v-if="item.sell===true">查看详情</el-button>
+              <el-button type="primary"  v-else-if="item.sell===false" disabled >已下架</el-button>
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <div class="card" v-if="total === 0" style="text-align: center; font-size: 16px; color: #666">暂无数据</div>
+    <div class="card" style="padding: 10px" v-if="total">
+      <el-pagination
+          background
+          @current-change="handleCurrentChange"
+          :current-page="pageNum"
+          :page-size="pageSize"
+          layout="total, prev, pager, next"
+          :total="total">
+      </el-pagination>
     </div>
+    <el-dialog title="商品详细描述" :visible.sync="fromVisible1" width="50%" :close-on-click-modal="false" destroy-on-close>
+      <div class="w-e-text">
+        <div style="font-size: 50px;font-weight: bolder;color: #000b17">{{this.previewName}}</div>
+        <div style="font-size: 20px;color: #000b17">价格:{{this.previewPrice}}</div>
+        <div style="font-size: 20px;color: #000b17">卖家:{{this.previewUserName}}</div>
+        <div style="font-size: 20px;color: #000b17;padding-bottom: 50px">联系方式:{{this.previewAssociation}}</div>
+        <hr>
+        <div style="font-size: 20px;">商品描述:</div>
+        <div v-html="descr"></div>
+      </div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="previewClose">关 闭</el-button>
+      </div>
+    </el-dialog>
 
     <el-dialog title="信息" :visible.sync="fromVisible" width="60%" :close-on-click-modal="false" destroy-on-close>
       <el-form :model="form" label-width="100px" style="padding-right: 50px" :rules="rules" ref="formRef">
@@ -90,11 +87,6 @@
             </el-option-group>
           </el-select>
         </el-form-item>
-        <!--        <el-form-item label="分类" prop="type">-->
-        <!--          <el-select v-model="form.type" style="width: 100%">-->
-        <!--            <el-option v-for="item in categoryList" :key="item.name" :value="item.value" :label="item.name"></el-option>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
         <el-form-item label="商品描述" prop="descr">
           <div id="editor"></div>
         </el-form-item>
@@ -106,17 +98,6 @@
 
     </el-dialog>
 
-    <el-dialog title="商品详细描述" :visible.sync="fromVisible1" width="50%" :close-on-click-modal="false" destroy-on-close>
-      <div class="w-e-text">
-        <div v-html="descr"></div>
-      </div>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="fromVisible1 = false">关 闭</el-button>
-      </div>
-    </el-dialog>
-
-
   </div>
 </template>
 
@@ -126,52 +107,64 @@ import hljs from "highlight.js";
 
 export default {
   name: "goods",
-
+  props: {
+    type: 'all',
+    span: null,
+    userId:null,
+  },
+  watch:{
+    type() {
+      this.load(1)
+    }
+  },
   data() {
     return {
       tableData: [],  // 所有的数据
       pageNum: 1,   // 当前的页码
-      pageSize: 10,  // 每页显示的个数
+      pageSize: 8,  // 每页显示的个数
       total: 0,
       name: null,
-      type: null,
       userName: null,
       descr: '',
       editor: null,
-      // categoryList: [{"name": "日用品", "value": "日用品"}, {"name": "学习", "value": "学习"}, {
-      //   "name": "数码",
-      //   "value": "数码"
-      // }, {"name": "其他", "value": "其他"}],
-      categoryList: [{
-        "name": "日用品",
-        "value": "日用品",
-        "subCategories": [{"name": "零食速食", "value": "零食速食"}, {"name": "个人清洁", "value": "个人清洁"}, {"name": "卫生用具", "value": "卫生用具"}, {"name": "体育运动", "value": "体育运动"}, {"name": "其他日用品", "value": "其他日用产品"}]
-      }, {
-        "name": "学习用品",
-        "value": "学习用品",
-        "subCategories": [{"name": "书本资料", "value": "书本资料"}, {"name": "文具", "value": "文具"}, {"name": "其他学习产品", "value": "其他学习产品"}]
-      }, {
-        "name": "电脑数码",
-        "value": "电脑数码",
-        "subCategories": [{"name": "手机平板", "value": "手机平板"}, {"name": "电脑", "value": "电脑"}, {"name": "耳机", "value": "耳机"}, {"name": "相机", "value": "相机"}, {"name": "网络设备", "value": "网络设备"}, {"name": "其他电子产品", "value": "其他电子产品"}]
-      }, {
-        "name": "其他",
-        "value": "其他",
-        "subCategories": [{"name": "其他", "value": "其他"}]
-      }],
+      good:null,
+
+      //用于预览商品全部信息
+      previewName:'',
+      previewUserName:'',
+      previewPrice:'',
+      previewAssociation:'',
 
       fromVisible: false,
       fromVisible1: false,
       form: {},
       user: JSON.parse(localStorage.getItem('xm-user') || '{}'),
-      rules: {
-        title: [
-          {required: true, message: '请输入标题', trigger: 'blur'},
-        ],
-        content: [
-          {required: true, message: '请输入内容', trigger: 'blur'},
-        ]
-      },
+      categoryList: [{
+        "name": "日用品",
+        "value": "日用品",
+        "subCategories": [{"name": "零食速食", "value": "零食速食"}, {"name": "个人清洁", "value": "个人清洁"}, {
+          "name": "卫生用具",
+          "value": "卫生用具"
+        }, {"name": "体育运动", "value": "体育运动"}, {"name": "其他日用品", "value": "其他日用产品"}]
+      }, {
+        "name": "学习用品",
+        "value": "学习用品",
+        "subCategories": [{"name": "书本资料", "value": "书本资料"}, {"name": "文具", "value": "文具"}, {
+          "name": "其他学习产品",
+          "value": "其他学习产品"
+        }]
+      }, {
+        "name": "电脑数码",
+        "value": "电脑数码",
+        "subCategories": [{"name": "手机平板", "value": "手机平板"}, {"name": "电脑", "value": "电脑"}, {
+          "name": "耳机",
+          "value": "耳机"
+        }, {"name": "相机", "value": "相机"}, {"name": "网络设备", "value": "网络设备"}, {"name": "其他电子产品", "value": "其他电子产品"}]
+      }, {
+        "name": "其他",
+        "value": "其他",
+        "subCategories": [{"name": "其他", "value": "其他"}]
+      }],
     }
   },
 
@@ -183,12 +176,24 @@ export default {
 
   },
   methods: {
-    preview(descr) {
-      this.descr = descr
+    preview(item) {
       this.fromVisible1 = true
+      this.descr=item.descr
+      this.previewName=item.name
+      this.previewUserName=item.userName
+      this.previewPrice=item.price
+      this.previewAssociation=item.association
     },
-    handleEdit(row) {   // 编辑数据
-      this.form = JSON.parse(JSON.stringify(row))  // 给form对象赋值  注意要深拷贝数据
+    previewClose(){
+      this.fromVisible1=false
+      this.previewUserName=''
+      this.previewPrice=''
+      this.previewAssociation=''
+      this.previewName=''
+
+    },
+    handleEdit(item) {   // 编辑数据
+      this.form = item  // 给form对象赋值  注意要深拷贝数据
       this.setRichText()
       this.fromVisible = true   // 打开弹窗
       setTimeout(() => {
@@ -226,16 +231,18 @@ export default {
 
     load(pageNum) {  // 分页查询
       if (pageNum) this.pageNum = pageNum
+      console.log(this.type)
+      console.log(this.userId)
       this.$request.get('/goods/selectPage', {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           name: this.name,
-          type: this.type,
+          type: this.type==='all'||this.type==='user'?null:this.type,
+          userId:this.type==='user'?this.userId:null,
           userName: this.userName,
         }
       }).then(res => {
-        console.log(res.data)
         this.tableData = res.data?.list
         this.total = res.data?.total
       })
@@ -261,9 +268,7 @@ export default {
       this.ids = rows.map(v => v.id)   //  [1,2]
     },
     reset() {
-      this.title = null
-      this.type = null
-      this.userName = null
+      this.name = null
       this.load(1)
     },
     handleCurrentChange(pageNum) {
