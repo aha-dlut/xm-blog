@@ -19,11 +19,22 @@ public class Notice implements Serializable {
     /** 创建人 */
     private String user;
 
+    /*封面*/
+    private String cover;
+
     /*分类id*/
     private Integer categoryId;
 
     /*分类名*/
     private String categoryName;
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
 
     public Integer getCategoryId() {
         return categoryId;

@@ -2,12 +2,12 @@
   <div class="main-content">
     <div style="display: flex; align-items: flex-start; grid-gap: 10px;">
 
-      <div style="display: flex;flex-direction: column">
-        <div style="display: flex;font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i
-            class="el-icon-refresh"></i> 重新定位
-        </div>
-        <div id="he-plugin-standard" style="display: flex"></div>
-      </div>
+<!--      <div style="flex: 1">-->
+<!--        <div style="display: flex;font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i-->
+<!--            class="el-icon-refresh"></i> 重新定位-->
+<!--        </div>-->
+<!--        <div id="he-plugin-standard" style="display: flex"></div>-->
+<!--      </div>-->
 
       <!--      <div style="width: 150px" class="card">-->
       <!--        <div class="category-item" :class="{ 'category-item-active': item.name === current }"-->

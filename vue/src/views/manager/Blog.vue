@@ -68,6 +68,7 @@
           <el-input type="textarea" v-model="form.descr" placeholder="简介"></el-input>
         </el-form-item>
         <el-form-item label="封面" prop="cover">
+          <img :src="form.cover" height="50px" width="50px"></img>
           <el-upload
               :action="$baseUrl + '/files/upload'"
               :headers="{ token: user.token }"

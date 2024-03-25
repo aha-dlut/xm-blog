@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div style="width: 380px; padding: 50px 30px; background-color: white; border-radius: 5px;">
-      <div style="text-align: center; font-size: 24px; margin-bottom: 30px; color: #333">大工森林</div>
+    <div style="width: 380px; padding: 50px 30px; background-color: white; border-radius: 50px;">
+      <div style="text-align: center; font-size: 24px; margin-bottom: 30px; color: #333">DUTPLUS</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
           <el-input size="medium" prefix-icon="el-icon-user" placeholder="请输入学号" v-model="form.username"></el-input>
@@ -11,8 +11,8 @@
         </el-form-item>
         <el-form-item prop="role">
           <el-radio-group v-model="form.role">
-            <el-radio label="ADMIN">管理员</el-radio>
-            <el-radio label="USER">用户</el-radio>
+            <el-radio-button label="ADMIN">管理</el-radio-button>
+            <el-radio-button label="USER">用户</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="code">
@@ -39,7 +39,7 @@
 
 <script>
 import Identify from "@/components/Identify";
-import axios from "axios";
+import axios from "axios"
 
 export default {
   name: "Login",
@@ -124,7 +124,7 @@ export default {
 .container {
   height: 100vh;
   overflow: hidden;
-  background-image: url("@/assets/imgs/project.png");
+  background-image: url("@/assets/imgs/bg6.jpg");
   background-size: 100%;
   display: flex;
   align-items: center;

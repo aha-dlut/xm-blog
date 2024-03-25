@@ -92,6 +92,8 @@
 </template>
 
 <script>
+import VueQrcode from 'vue-qrcode';
+import QRCode from 'qrcode';
 export default {
   name: "Main",
   props: {

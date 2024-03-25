@@ -3,7 +3,7 @@
 <!--    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px"></i>公告：{{ top }}</div>-->
 <!--    计划显示当前日期和天气功能-->
     <!--头部-->
-    <div class="front-header">
+    <div class="front-header" style="display: flex">
       <div class="front-header-left">
         <img src="@/assets/imgs/mylogo.png" alt="">
         <div class="title">DutPlus</div>
@@ -12,13 +12,14 @@
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
 						<el-menu-item index="/front/home">首页</el-menu-item>
-            <el-menu-item index="/front/notice">通知公告</el-menu-item>
+            <el-menu-item index="/front/notice">校内通知</el-menu-item>
             <el-menu-item index="/front/allBlog">全部讨论</el-menu-item>
-            <el-menu-item index="/front/activity">活动中心</el-menu-item>
-						<el-menu-item index="/front/person">个人中心</el-menu-item>
-            <el-menu-item index="/front/diskHome">个人网盘</el-menu-item>
+            <el-menu-item index="/front/activity">校园活动</el-menu-item>
+            <el-menu-item index="/front/diskHome">校园网盘</el-menu-item>
             <el-menu-item index="/front/Source">文件资料</el-menu-item>
             <el-menu-item index="/front/goods">二手市场</el-menu-item>
+            <el-menu-item index="/front/person">个人中心</el-menu-item>
+
           </el-menu>
         </div>
       </div>

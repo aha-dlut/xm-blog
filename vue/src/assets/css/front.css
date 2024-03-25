@@ -13,7 +13,7 @@ body {
     height: 60px;
     line-height: 60px;
     border-bottom: 1px solid #eee;
-    background:#b3d1eb;
+    background:#3385c9;
 }
 .front-header-left {
     width: 300px;
@@ -64,7 +64,7 @@ body {
     height: 59px;
 }
 .el-menu {
-    background-color: #b3d1eb;
+    background-color: #3385c9;
 }
 .el-menu-item.is-active {
     color: #fff !important;

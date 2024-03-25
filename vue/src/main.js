@@ -7,7 +7,7 @@ import '@/assets/css/global.css'
 import '@/assets/css/theme/index.css'
 import '@/assets/css/iconfont/iconfont.css'
 import 'highlight.js/styles/monokai-sublime.css'
-
+import 'amfe-flexible'
 import request from "@/utils/request";
 
 Vue.config.productionTip = false

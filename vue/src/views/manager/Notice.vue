@@ -17,7 +17,6 @@
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="序号" width="80" align="center" sortable></el-table-column>
         <el-table-column prop="title" label="标题" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="content" label="内容" show-overflow-tooltip></el-table-column>
         <el-table-column prop="time" label="创建时间"></el-table-column>
         <el-table-column prop="user" label="创建人"></el-table-column>
         <el-table-column prop="categoryName" label="分类"></el-table-column>
@@ -49,8 +48,22 @@
         <el-form-item prop="title" label="标题">
           <el-input v-model="form.title" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="content" label="内容">
-          <el-input type="textarea" :rows="5" v-model="form.content" autocomplete="off"></el-input>
+        <el-form-item label="封面" prop="cover">
+          <img :src="form.cover" height="50px" width="50px" v-if="form.cover!=null">
+          <el-upload
+              :action="$baseUrl + '/files/upload'"
+              :headers="{ token: user.token }"
+              list-type="picture"
+              :on-success="handleCoverSuccess"
+          >
+            <el-button type="primary">上传封面</el-button>
+          </el-upload>
+        </el-form-item>
+<!--        <el-form-item prop="content" label="内容">-->
+<!--          <el-input type="textarea" :rows="5" v-model="form.content" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+        <el-form-item label="内容" prop="content">
+          <div id="editor"></div>
         </el-form-item>
         <el-form-item label="分类" prop="categoryId">
           <el-select v-model="form.categoryId" style="width: 100%">
@@ -69,6 +82,9 @@
 </template>
 
 <script>
+import E from "wangeditor";
+import hljs from "highlight.js";
+
 export default {
   name: "Notice",
   data() {
@@ -88,11 +104,14 @@ export default {
         title: [
           {required: true, message: '请输入标题', trigger: 'blur'},
         ],
-        content: [
-          {required: true, message: '请输入内容', trigger: 'blur'},
-        ]
+        // content: [
+        //   {required: true, message: '请输入内容', trigger: 'blur'},
+        // ]
       },
-      ids: []
+      ids: [],
+      editor: null,
+      content: '',
+      fromVisible1: false
     }
   },
   created() {
@@ -101,15 +120,42 @@ export default {
   methods: {
     handleAdd() {   // 新增数据
       this.form = {}  // 新增数据的时候清空数据
+      this.setRichText()
       this.fromVisible = true   // 打开弹窗
+    },
+    handleCoverSuccess(res) {
+      this.form.cover = res.data
+    },
+    setRichText() {
+      this.$nextTick(() => {
+        this.editor = new E(`#editor`)
+        this.editor.highlight = hljs
+        this.editor.config.uploadImgServer = this.$baseUrl + '/files/editor/upload'
+        this.editor.config.uploadFileName = 'file'
+        this.editor.config.uploadImgHeaders = {
+          token: this.user.token
+        }
+        this.editor.config.uploadImgParams = {
+          type: 'img',
+        }
+        this.editor.create()  // 创建
+      })
     },
     handleEdit(row) {   // 编辑数据
       this.form = JSON.parse(JSON.stringify(row))  // 给form对象赋值  注意要深拷贝数据
       this.fromVisible = true   // 打开弹窗
+      this.setRichText()
+      setTimeout(() => {
+        this.editor.txt.html(this.form.content)
+      }, 0)
     },
     save() {   // 保存按钮触发的逻辑  它会触发新增或者更新
       this.$refs.formRef.validate((valid) => {
         if (valid) {
+          this.form.content = this.editor.txt.html()
+          if(this.form.cover == null){
+            this.form.cover ="http://192.168.31.73:9090/files/1711346061888-bg9.jpg"
+          }
           this.$request({
             url: this.form.id ? '/notice/update' : '/notice/add',
             method: this.form.id ? 'PUT' : 'POST',
