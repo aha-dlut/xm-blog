@@ -9,6 +9,10 @@
       <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0">
         <div style="flex: 1; width: 0">
           <a :href="'/front/noticeDetail?noticeId=' + item.id" target="_blank"><div class="blog-title">{{ item.title }}</div></a>
+          <div style="width: 150px">
+            <img style="width: 100%; height: 80px; border-radius: 5px" :src="item.cover" alt="">
+          </div>
+        </div>
 <!--          <div class="line1" style="color: #666; margin-bottom: 10px; font-size: 13px">{{ item.descr }}</div>-->
           <div style="display: flex; align-items: center">
             <div style="flex: 1; font-size: 13px">

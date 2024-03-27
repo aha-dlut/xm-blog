@@ -2,35 +2,72 @@
   <div class="main-content">
     <div style="display: flex; align-items: flex-start; grid-gap: 10px;">
 
-<!--      <div style="flex: 1">-->
-<!--        <div style="display: flex;font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i-->
-<!--            class="el-icon-refresh"></i> 重新定位-->
-<!--        </div>-->
-<!--        <div id="he-plugin-standard" style="display: flex"></div>-->
-<!--      </div>-->
+      <!--      <div style="flex: 1">-->
+      <!--        <div style="display: flex;font-size: 12px; color: #666; cursor: pointer;" @click="getLocationId"><i-->
+      <!--            class="el-icon-refresh"></i> 重新定位-->
+      <!--        </div>-->
+      <!--        <div id="he-plugin-standard" style="display: flex"></div>-->
+      <!--      </div>-->
 
       <!--      <div style="width: 150px" class="card">-->
       <!--        <div class="category-item" :class="{ 'category-item-active': item.name === current }"-->
       <!--             v-for="item in categoryList" :key="item.id" @click="selectCategory(item.name)">{{ item.name }}</div>-->
       <!--      </div>-->
       <div style="flex: 1;">
-        <div class="card" style="min-height: 30vh;display: flex;flex-direction: column; width: 80%">
-          <div style="font-size: 30px">重要公告</div>
-          <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0" style="display: flex">
-            <div style="flex: 1;width: 0;">
-              <a :href="'/front/noticeDetail?noticeId=' + item.id" target="_blank">
-                <div style="font-size: 20px;color: #666">{{ item.title }}</div>
+        <div>
+          <!--        <div class="card" style="min-height: 30vh;display: flex;flex-direction: column; width: 80%">-->
+
+          <!--          <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0" style="display: flex">-->
+          <!--            <div style="flex: 1;width: 0;">-->
+          <!--              <a :href="'/front/noticeDetail?noticeId=' + item.id" target="_blank">-->
+          <!--                <div style="font-size: 20px;color: #666">{{ item.title }}</div>-->
+          <!--              </a>-->
+          <!--              <div style="display: flex;align-items: flex-end">-->
+          <!--                <div style="flex: 1; font-size: 13px">-->
+          <!--                  <span style="color: #666; margin-right: 20px;font-weight: bolder"><i-->
+          <!--                      class="el-icon-user"></i> {{ item.user }}</span>-->
+          <!--                </div>-->
+          <!--                <div style="display: flex">-->
+          <!--                  <div class="notice-time">{{ item.time }}</div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div>-->
+          <!--            <div style="width: 400px;height: 300px">-->
+          <!--              <a :href="'/front/noticeDetail?noticeId=' + notice.id" target="_blank">-->
+          <!--                <img style="width: 100%; height: 100%; border-radius: 5px" :src="notice.cover" alt="">-->
+          <!--              </a>-->
+          <!--            </div>-->
+          <!--            <div>-->
+          <!--              <div v-if="total>0" v-for="item in total" :key="item" class="circle" style="display: inline-block">-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <div style="display: flex;align-items: center;justify-content: space-between;width: 500px">
+            <div style="font-size: 30px"><i class="el-icon-s-order"></i>新闻公告</div>
+            <div style="display: flex;font-size: 15px">
+              <a :href="'/front/notice'" target="_blank">
+                <i class="el-icon-circle-plus">更多</i>
               </a>
-              <div style="display: flex;align-items: flex-end">
-                <div style="flex: 1; font-size: 13px">
-                  <span style="color: #666; margin-right: 20px;font-weight: bolder"><i
-                      class="el-icon-user"></i> {{ item.user }}</span>
-                </div>
-                <div style="display: flex">
-                  <div class="notice-time">{{ item.time }}</div>
-                </div>
+            </div>
+          </div>
+          <div>
+            <div style="width: 500px;height: 350px; position: relative;"><a
+                :href="'/front/noticeDetail?noticeId=' + notice.id" target="_blank"> <img
+                style="width: 100%; height: 100%; border-radius: 5px" :src="notice.cover" alt=""> </a>
+              <div style="position: absolute;top: 0;right:0; font-size: 20px">
+              </div>
+              <div style="position: absolute;bottom: 25px;left:10%;">
+                <div style="font-weight: bolder;color: white;font-size: 20px">{{ notice.title }}}</div>
+              </div>
+              <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                <div v-if="total>0" v-for="item in total" :key="item" class="circle"
+                     :class="{ 'circle-item-active': item === currentNotice+1}"
+                     style="display: inline-block;" @click="clickCircle(item)"></div>
               </div>
             </div>
+
           </div>
           <div v-if="total === 0" style="padding: 20px ;text-align: center; font-size: 16px; color: #666">暂无数据</div>
         </div>
@@ -98,8 +135,9 @@ export default {
     return {
       title: null,
       tableData: [],  // 所有的数据
-
-
+      notice: null,
+      total: 0,
+      currentNotice: 0,
       topList: [],
       showList: [],
       lastIndex: 0,
@@ -123,10 +161,14 @@ export default {
     this.refreshTop()
     this.getLocationId()
     this.loadTopActivity()
+    setInterval(() => {
+      this.changeNotice()
+    }, 5000)
 
 
   },
   watch: {
+
     locationId() {
       const script = document.createElement('script')
       script.src = `https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0`
@@ -151,6 +193,19 @@ export default {
   },
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
+    clickCircle(item) {
+      console.log(item)
+      this.currentNotice = item - 1
+      this.notice = this.tableData[this.currentNotice]
+    },
+    changeNotice() {
+      if (this.total > 0) {
+        this.currentNotice = (this.currentNotice + 1) % this.total
+        this.notice = this.tableData[this.currentNotice]
+
+
+      }
+    },
     loadTopActivity() {
       this.$request.get('/activity/selectTop').then(res => {
         this.topActivityList = res.data || []
@@ -170,6 +225,7 @@ export default {
         this.lastIndex += 5  // 5  10  5
       })
     },
+
 
     load() {
       // 请求分类的数据
@@ -191,7 +247,10 @@ export default {
         }
       }).then(res => {
         this.tableData = res.data?.list
-        this.total = res.data?.total
+        if(res.data!=null){
+          this.total = res.data.total>5?5:res.data.total
+        }
+        this.notice = this.tableData[this.currentNotice]
       })
     },
 
@@ -210,8 +269,7 @@ export default {
             console.log("获得地名失败")
             resolve();
           });
-        }
-        else {
+        } else {
           this.locationName = null
           console.log("获得地名失败")
           resolve();
@@ -300,6 +358,26 @@ export default {
   display: flex;
   grid-gap: 10px;
   padding-right: 0;
+}
+
+.circle {
+  width: 15px;
+  height: 15px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: #f1f6f9;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.circle-item-active {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: #d3dce6;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 </style>
