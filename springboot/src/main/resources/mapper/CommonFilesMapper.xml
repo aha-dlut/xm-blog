@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CommonFilesMapper">
+
+    <sql id="Base_Column_List">
+        id,name,folder,file,type,size,create_time,update_time,folder_id,root_folder_id,category
+    </sql>
+
+
+
+    <insert id="insert" parameterType="com.example.entity.CommonFiles" useGeneratedKeys="true" keyProperty="id">
+        insert into common_files
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="folder != null">folder,</if>
+            <if test="file != null">file,</if>
+            <if test="type != null">type,</if>
+            <if test="size != null">size,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="folderId != null">folder_id,</if>
+            <if test="rootFolderId != null">root_folder_id,</if>
+            <if test="category != null">category,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="folder != null">#{folder},</if>
+            <if test="file != null">#{file},</if>
+            <if test="type != null">#{type},</if>
+            <if test="size != null">#{size},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="folderId != null">#{folderId},</if>
+            <if test="rootFolderId != null">#{rootFolderId},</if>
+            <if test="category != null">#{category},</if>
+        </trim>
+    </insert>
+
+    <select id="selectById" resultType="com.example.entity.CommonFiles">
+        select
+        <include refid="Base_Column_List" />
+        from common_files
+        where id = #{id}
+    </select>
+
+    <update id="updateById" parameterType="com.example.entity.CommonFiles">
+        update common_files
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="folder != null">
+                folder = #{folder},
+            </if>
+            <if test="file != null">
+                file = #{file},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="size != null">
+                size = #{size},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="folderId != null">
+                folder_id = #{folderId},
+            </if>
+            <if test="rootFolderId != null">
+                root_folder_id = #{rootFolderId},
+            </if>
+            <if test="category != null">
+                category = #{category},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from common_files
+        where  id = #{id}
+    </delete>
+
+    <select id="selectByFolderId" resultType="com.example.entity.CommonFiles">
+        select
+            *
+        from common_files
+        where folder_id = #{folderId}
+    </select>
+
+    <select id="selectAll" resultType="com.example.entity.CommonFiles">
+        select
+        <include refid="Base_Column_List" />
+        from common_files
+        <where>
+            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null"> and type =#{type}</if>
+            <if test="category != null"> and category =#{category}</if>
+            <if test="folderId == null"> and folder_id is null</if>
+            <if test="folderId != null"> and folder_id = #{folderId}</if>
+        </where>
+        order by common_files.id desc
+    </select>
+
+    <select id="selectAllData" resultType="com.example.entity.CommonFiles">
+        select
+        *
+        from common_files
+        <where>
+            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+
+
+</mapper>

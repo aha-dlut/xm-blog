@@ -24,6 +24,8 @@ public class WebConfig implements  WebMvcConfigurer {
                 .excludePathPatterns("/diskFiles/preview/**")
                 .excludePathPatterns("/diskFiles/selectShare")
                 .excludePathPatterns("/diskFiles/selectFolders")
-                .excludePathPatterns("/files/**");
+                .excludePathPatterns("/files/**")
+                .excludePathPatterns("/commonFiles/download/**")
+                .excludePathPatterns("/commonFiles/preview/**");
     }
 }

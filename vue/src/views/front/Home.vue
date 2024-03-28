@@ -15,35 +15,6 @@
       <!--      </div>-->
       <div style="flex: 1;">
         <div>
-          <!--        <div class="card" style="min-height: 30vh;display: flex;flex-direction: column; width: 80%">-->
-
-          <!--          <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0" style="display: flex">-->
-          <!--            <div style="flex: 1;width: 0;">-->
-          <!--              <a :href="'/front/noticeDetail?noticeId=' + item.id" target="_blank">-->
-          <!--                <div style="font-size: 20px;color: #666">{{ item.title }}</div>-->
-          <!--              </a>-->
-          <!--              <div style="display: flex;align-items: flex-end">-->
-          <!--                <div style="flex: 1; font-size: 13px">-->
-          <!--                  <span style="color: #666; margin-right: 20px;font-weight: bolder"><i-->
-          <!--                      class="el-icon-user"></i> {{ item.user }}</span>-->
-          <!--                </div>-->
-          <!--                <div style="display: flex">-->
-          <!--                  <div class="notice-time">{{ item.time }}</div>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--          <div>-->
-          <!--            <div style="width: 400px;height: 300px">-->
-          <!--              <a :href="'/front/noticeDetail?noticeId=' + notice.id" target="_blank">-->
-          <!--                <img style="width: 100%; height: 100%; border-radius: 5px" :src="notice.cover" alt="">-->
-          <!--              </a>-->
-          <!--            </div>-->
-          <!--            <div>-->
-          <!--              <div v-if="total>0" v-for="item in total" :key="item" class="circle" style="display: inline-block">-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
           <div style="display: flex;align-items: center;justify-content: space-between;width: 500px">
             <div style="font-size: 30px"><i class="el-icon-s-order"></i>新闻公告</div>
             <div style="display: flex;font-size: 15px">
@@ -67,10 +38,10 @@
                      style="display: inline-block;" @click="clickCircle(item)"></div>
               </div>
             </div>
-
           </div>
           <div v-if="total === 0" style="padding: 20px ;text-align: center; font-size: 16px; color: #666">暂无数据</div>
         </div>
+
         <div class="card" style="margin-bottom: 10px;margin-top: 10px;width: 80%">
           <div style="display: flex; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #ddd">
             <div style="font-size: 20px; flex: 1">今日热议</div>
@@ -247,8 +218,8 @@ export default {
         }
       }).then(res => {
         this.tableData = res.data?.list
-        if(res.data!=null){
-          this.total = res.data.total>5?5:res.data.total
+        if (res.data != null) {
+          this.total = res.data.total > 5 ? 5 : res.data.total
         }
         this.notice = this.tableData[this.currentNotice]
       })

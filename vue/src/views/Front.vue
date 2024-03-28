@@ -16,7 +16,7 @@
             <el-menu-item index="/front/allBlog">全部讨论</el-menu-item>
             <el-menu-item index="/front/activity">校园活动</el-menu-item>
             <el-menu-item index="/front/diskHome">校园网盘</el-menu-item>
-            <el-menu-item index="/front/Source">文件资料</el-menu-item>
+            <el-menu-item index="/front/commonFiles">文件资料</el-menu-item>
             <el-menu-item index="/front/goods">二手市场</el-menu-item>
             <el-menu-item index="/front/person">个人中心</el-menu-item>
 
