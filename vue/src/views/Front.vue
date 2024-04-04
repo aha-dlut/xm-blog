@@ -1,17 +1,17 @@
 <template>
   <div>
-<!--    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px"></i>公告：{{ top }}</div>-->
-<!--    计划显示当前日期和天气功能-->
+    <!--    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px"></i>公告：{{ top }}</div>-->
+    <!--    计划显示当前日期和天气功能-->
     <!--头部-->
     <div class="front-header" style="display: flex">
       <div class="front-header-left">
-        <img src="@/assets/imgs/mylogo.png" alt="">
+        <img src="@/assets/imgs/mylogo.png" alt="" />
         <div class="title">DutPlus</div>
       </div>
       <div class="front-header-center">
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
-						<el-menu-item index="/front/home">首页</el-menu-item>
+            <el-menu-item index="/front/home">首页</el-menu-item>
             <el-menu-item index="/front/notice">校内通知</el-menu-item>
             <el-menu-item index="/front/allBlog">全部讨论</el-menu-item>
             <el-menu-item index="/front/activity">校园活动</el-menu-item>
@@ -19,12 +19,16 @@
             <el-menu-item index="/front/commonFiles">文件资料</el-menu-item>
             <el-menu-item index="/front/goods">二手市场</el-menu-item>
             <el-menu-item index="/front/person">个人中心</el-menu-item>
-
           </el-menu>
         </div>
       </div>
       <div>
-        <el-input style="width: 260px; margin-right: 10px" placeholder="请输入关键字搜索" v-model="title" clearable></el-input>
+        <el-input
+          style="width: 260px; margin-right: 10px"
+          placeholder="请输入关键字搜索"
+          v-model="title"
+          clearable
+        ></el-input>
         <el-button type="success" @click="goSearch">搜 索</el-button>
       </div>
       <div class="front-header-right">
@@ -35,9 +39,10 @@
         <div v-else>
           <el-dropdown>
             <div class="front-header-dropdown">
-              <img :src="user.avatar" alt="">
+              <img :src="user.avatar" alt="" />
               <div style="margin-left: 10px; color: #fff">
-                <span>你好,{{ user.name }}</span><i class="el-icon-arrow-down" style="margin-left: 5px"></i>
+                <span>你好,{{ user.name }}</span
+                ><i class="el-icon-arrow-down" style="margin-left: 5px"></i>
               </div>
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -54,7 +59,6 @@
       <router-view ref="child" @update:user="updateUser" />
     </div>
   </div>
-
 </template>
 
 <script>
@@ -71,14 +75,14 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.loadNotice()
   },
   methods: {
-    goSearch() {
+    goSearch () {
       location.href = '/front/search?title=' + this.title
     },
-    loadNotice() {
+    loadNotice () {
       this.$request.get('/notice/selectAll').then(res => {
         this.notice = res.data
         let i = 0
@@ -94,13 +98,13 @@ export default {
         }
       })
     },
-    updateUser() {
+    updateUser () {
       this.user = JSON.parse(localStorage.getItem('xm-user') || '{}')   // 重新获取下用户的最新信息
     },
     // 退出登录
-    logout() {
-      localStorage.removeItem("xm-user");
-      this.$router.push("/login");
+    logout () {
+      localStorage.removeItem("xm-user")
+      this.$router.push("/login")
     },
   }
 
@@ -108,5 +112,11 @@ export default {
 </script>
 
 <style scoped>
-  @import "@/assets/css/front.css";
+@import "@/assets/css/front.css";
+.el-menu {
+  display: grid;
+  margin: 0;
+  padding-left: 0;
+  grid-template-columns: repeat(9, 1fr);
+}
 </style>
