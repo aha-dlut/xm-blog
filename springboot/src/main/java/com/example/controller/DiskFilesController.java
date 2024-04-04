@@ -7,6 +7,8 @@ import com.example.entity.Share;
 import com.example.entity.Trash;
 import com.example.service.DiskFilesService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * 网盘文件前端操作接口
  **/
 @RestController
+@Api(tags = "个人网盘接口")
 @RequestMapping("/diskFiles")
 public class DiskFilesController {
 
@@ -30,6 +33,7 @@ public class DiskFilesController {
     /**
      * 新增
      */
+    @ApiOperation(value = "上传")
     @PostMapping("/add")
     public Result add(MultipartFile file, String name, String folder, Integer folderId) {
         diskFilesService.add(file, name, folder, folderId);
@@ -39,6 +43,7 @@ public class DiskFilesController {
     /**
      * 复制
      */
+    @ApiOperation(value = "复制文件")
     @PostMapping("/copy/{id}")
     public Result copy(@PathVariable Integer id) {
         diskFilesService.copy(id, null);
@@ -48,6 +53,7 @@ public class DiskFilesController {
     /**
      * 分享
      */
+    @ApiOperation(value = "分享文件")
     @PostMapping("/share")
     public Result share(@RequestBody DiskFiles diskFiles) {
         Share share = diskFilesService.share(diskFiles);
@@ -57,11 +63,13 @@ public class DiskFilesController {
     /*
     下载
     * */
+    @ApiOperation(value = "下载文件")
     @GetMapping("/download/{flag}")
     public void download(@PathVariable String flag, HttpServletResponse response) {
         diskFilesService.download(flag, response);
     }
 
+    @ApiOperation(value = "文件预览")
     @GetMapping("/preview/{id}")
     public void preview(@PathVariable Integer id, HttpServletResponse response) {
         diskFilesService.preview(id, response);
@@ -71,6 +79,7 @@ public class DiskFilesController {
      * 移入回收站
      * 递归删除
      */
+    @ApiOperation(value = "移入回收站")
     @DeleteMapping("/trash/{id}")
     public Result trash(@PathVariable Integer id) {
         diskFilesService.trashById(id);
@@ -80,6 +89,7 @@ public class DiskFilesController {
     /**
      * 批量移入回收站
      */
+    @ApiOperation(value = "批量移入回收站")
     @DeleteMapping("/trash/batch")
     public Result trashBatch(@RequestBody List<Integer> ids) {
         diskFilesService.trashBatch(ids);
@@ -89,6 +99,7 @@ public class DiskFilesController {
     /**
      * 删除
      */
+    @ApiOperation(value = "从回收站删除")
     @DeleteMapping("/delete/{id}")
     public Result deleteById(@PathVariable Integer id) {
         diskFilesService.deleteById(id);
@@ -98,6 +109,7 @@ public class DiskFilesController {
     /**
      * 批量删除
      */
+    @ApiOperation(value = "批量从回收站里删除")
     @DeleteMapping("/delete/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         diskFilesService.deleteBatch(ids);
@@ -107,6 +119,7 @@ public class DiskFilesController {
     /**
      * 修改
      */
+    @ApiOperation(value = "修改文件")
     @PutMapping("/update")
     public Result updateById(@RequestBody DiskFiles diskFiles) {
         diskFilesService.updateById(diskFiles);
@@ -116,6 +129,7 @@ public class DiskFilesController {
     /**
      * 还原文件
      */
+    @ApiOperation(value = "从回收站还原")
     @PutMapping("/restore/{id}")
     public Result restore(@PathVariable Integer id) {
         diskFilesService.restore(id);
@@ -125,6 +139,7 @@ public class DiskFilesController {
     /**
      * 根据ID查询
      */
+    @ApiOperation(value = "根据id查询")
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
         DiskFiles diskFiles = diskFilesService.selectById(id);
@@ -134,6 +149,7 @@ public class DiskFilesController {
     /**
      * 查询所有
      */
+    @ApiOperation(value = "查询所有")
     @GetMapping("/selectAll")
     public Result selectAll(DiskFiles diskFiles) {
         List<DiskFiles> list = diskFilesService.selectAll(diskFiles);
@@ -143,6 +159,7 @@ public class DiskFilesController {
     /**
      * 分页查询
      */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/selectPage")
     public Result selectPage(DiskFiles diskFiles,
                              @RequestParam(defaultValue = "1") Integer pageNum,
@@ -154,6 +171,7 @@ public class DiskFilesController {
     /**
      * 查询所有父级的目录名称
      */
+    @ApiOperation(value = "查询所有父级目录")
     @GetMapping("/selectFolders")
     public Result selectFolders(Integer folderId) {
         List<DiskFiles> list = new ArrayList<>();
@@ -168,6 +186,7 @@ public class DiskFilesController {
     /**
      * 查询回收站
      */
+    @ApiOperation(value = "查询回收站")
     @GetMapping("/selectTrash")
     public Result selectTrash() {
         List<Trash> list = diskFilesService.selectTrash();
@@ -177,12 +196,14 @@ public class DiskFilesController {
     /**
      * 查询分享的数据
      */
+    @ApiOperation(value = "查询分享的数据")
     @GetMapping("/selectShare")
     public Result selectShare(Integer shareId, Integer folderId) {
         List<DiskFiles> list = diskFilesService.selectShare(shareId, folderId);
         return Result.success(list);
     }
 
+    @ApiOperation(value = "查询天数")
     @GetMapping("/count")
     public Result count(@RequestParam Integer days) {
         List<Dict> list = diskFilesService.count(days);

@@ -1,12 +1,20 @@
 package com.example.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 收藏模块
  */
+@ApiModel(description = "收藏")
 public class Collect {
+    @ApiModelProperty("id")
     private Integer id;
+    @ApiModelProperty("我也不知道")
     private Integer fid;
+    @ApiModelProperty("用户id")
     private Integer userId;
+    @ApiModelProperty("我也没看懂")
     private String module;
 
     public Integer getId() {

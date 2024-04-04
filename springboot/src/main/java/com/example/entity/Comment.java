@@ -1,34 +1,46 @@
 package com.example.entity;
 
-import java.util.List;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+@ApiModel(description = "评论")
 public class Comment {
 
     /** ID */
+    @ApiModelProperty("id")
     private Integer id;
     /** 内容 */
+    @ApiModelProperty("内容")
     private String content;
     /** 评论人 */
+    @ApiModelProperty("评论人的id")
     private Integer userId;
     /** 父级ID */
+    @ApiModelProperty("父级评论id")
     private Integer pid;
     /** 根节点ID */
+    @ApiModelProperty("根节点的id")
     private Integer rootId;
     /** 评论时间 */
+    @ApiModelProperty("评论时间")
     private String time;
 
 
+    @ApiModelProperty("博客id")
     /** 博客ID */
     private Integer fid;
 
+    @ApiModelProperty("我也不知道")
     private String module;
-
+    @ApiModelProperty("用户名")
     private String userName;
-
+    @ApiModelProperty("头像")
     private String avatar;
-
+    @ApiModelProperty("回复给谁，那个人的名字")
     private String replyUser;  // 回复给谁 就是谁的名称
 
+    @ApiModelProperty("子评论表")
     private List<Comment> children;
 
     public String getReplyUser() {

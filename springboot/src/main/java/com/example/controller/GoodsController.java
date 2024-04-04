@@ -5,6 +5,8 @@ import com.example.entity.Blog;
 import com.example.entity.Goods;
 import com.example.service.GoodsService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/goods")
+@Api(tags = "商品管理")
 public class GoodsController {
 
     @Resource
@@ -28,12 +31,14 @@ public class GoodsController {
         return Result.success();
     }
 
+    @ApiOperation(value = "添加商品")
     @PostMapping("/add")
     public Result add(@RequestBody Goods goods){
         goodsService.add(goods);
         return Result.success();
     }
 
+    @ApiOperation(value = "删除商品")
     @DeleteMapping("/delete/{id}")
     public Result deleteById(@PathVariable Integer id){
         goodsService.deleteById(id);
@@ -43,6 +48,7 @@ public class GoodsController {
     /**
      * 批量删除
      */
+    @ApiOperation(value = "批量删除")
     @DeleteMapping("/delete/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         goodsService.deleteBatch(ids);
@@ -52,6 +58,7 @@ public class GoodsController {
     /**
      * 根据ID查询
      */
+    @ApiOperation(value = "根据id查询")
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
         Goods good = goodsService.selectById(id);
@@ -61,6 +68,7 @@ public class GoodsController {
     /**
      * 查询所有
      */
+    @ApiOperation(value = "查询所有商品")
     @GetMapping("/selectAll")
     public Result selectAll(Goods goods) {
         List<Goods> list = goodsService.selectAll(goods);
@@ -70,6 +78,7 @@ public class GoodsController {
     /**
      * 分页查询
      */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/selectPage")
     public Result selectPage(Goods goods,
                              @RequestParam(defaultValue = "1") Integer pageNum,
@@ -81,12 +90,14 @@ public class GoodsController {
     /**
      * 修改
      */
+    @ApiOperation(value = "修改商品")
     @PutMapping("/update")
     public Result updateById(@RequestBody Goods goods) {
         goodsService.updateById(goods);
         return Result.success();
     }
 
+    @ApiOperation(value = "改变商品状态")
     @PostMapping("/changeSell/{id}")
     public Result changeSell(@PathVariable Integer id){
         goodsService.changeSell(id);

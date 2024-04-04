@@ -1,28 +1,43 @@
 package com.example.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
+
+@ApiModel(description = "网盘文件分享")
 public class Share implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** ID */
+    @ApiModelProperty("id")
     private Integer id;
     /** 名称 */
+    @ApiModelProperty("名称")
     private String name;
     /** 文件ID */
+    @ApiModelProperty("文件的id")
     private Integer fileId;
+    @ApiModelProperty("文件类型")
     private String type;
     /** 分享时间 */
+    @ApiModelProperty("分享时间")
     private String shareTime;
     /** 到期时间 */
+    @ApiModelProperty("到期时间")
     private String endTime;
     /** 访问次数 */
+    @ApiModelProperty("访问次数")
     private Integer count;
     /** 分享人ID */
+    @ApiModelProperty("分享人的id")
     private Integer userId;
+    @ApiModelProperty("分享码")
     private String code;
+    @ApiModelProperty("用户名")
     private String userName;
-
+    @ApiModelProperty("状态")
     private String status;
 
     public String getStatus() {

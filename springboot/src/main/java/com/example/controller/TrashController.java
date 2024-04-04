@@ -4,6 +4,8 @@ import com.example.common.Result;
 import com.example.entity.Trash;
 import com.example.service.TrashService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,6 +16,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/trash")
+@Api(tags = "回收站接口")
 public class TrashController {
 
     @Resource
@@ -22,6 +25,7 @@ public class TrashController {
     /**
      * 新增
      */
+    @ApiOperation(value = "新增")
     @PostMapping("/add")
     public Result add(@RequestBody Trash trash) {
         trashService.add(trash);
@@ -31,6 +35,7 @@ public class TrashController {
     /**
      * 删除
      */
+    @ApiOperation(value = "删除")
     @DeleteMapping("/delete/{id}")
     public Result deleteById(@PathVariable Integer id) {
         trashService.deleteById(id);
@@ -40,6 +45,7 @@ public class TrashController {
     /**
      * 批量删除
      */
+    @ApiOperation(value = "批量删除")
     @DeleteMapping("/delete/batch")
     public Result deleteBatch(@RequestBody List<Integer> ids) {
         trashService.deleteBatch(ids);
@@ -49,6 +55,7 @@ public class TrashController {
     /**
      * 修改
      */
+    @ApiOperation(value = "修改")
     @PutMapping("/update")
     public Result updateById(@RequestBody Trash trash) {
         trashService.updateById(trash);
@@ -58,6 +65,7 @@ public class TrashController {
     /**
      * 根据ID查询
      */
+    @ApiOperation(value = "根据id查询")
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
         Trash trash = trashService.selectById(id);
@@ -67,6 +75,7 @@ public class TrashController {
     /**
      * 查询所有
      */
+    @ApiOperation(value = "查询所有")
     @GetMapping("/selectAll")
     public Result selectAll(Trash trash ) {
         List<Trash> list = trashService.selectAll(trash);
@@ -76,6 +85,7 @@ public class TrashController {
     /**
      * 分页查询
      */
+    @ApiOperation(value = "分页查询")
     @GetMapping("/selectPage")
     public Result selectPage(Trash trash,
                              @RequestParam(defaultValue = "1") Integer pageNum,

@@ -8,6 +8,8 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.service.AdminService;
 import com.example.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,6 +17,7 @@ import javax.annotation.Resource;
 /**
  * 基础前端接口
  */
+@Api(tags = "基础的前端功能接口")
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class WebController {
@@ -34,6 +37,7 @@ public class WebController {
      * 登录
      */
 
+    @ApiOperation(value = "登录")
     @PostMapping("/login")
     public Result login(@RequestBody Account account) {
         //判断传参是否为空
@@ -54,6 +58,7 @@ public class WebController {
     /**
      * 注册
      */
+    @ApiOperation(value = "注册")
     @PostMapping("/register")
     public Result register(@RequestBody Account account) {
         if (StrUtil.isBlank(account.getUsername()) || StrUtil.isBlank(account.getPassword())
@@ -71,6 +76,7 @@ public class WebController {
     /**
      * 修改密码
      */
+    @ApiOperation(value = "修改密码")
     @PutMapping("/updatePassword")
     public Result updatePassword(@RequestBody Account account) {
         if (StrUtil.isBlank(account.getUsername()) || StrUtil.isBlank(account.getPassword())

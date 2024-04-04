@@ -1,37 +1,57 @@
 package com.example.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "活动类")
 public class Activity {
 
     /** ID */
+    @ApiModelProperty("活动id")
     private Integer id;
     /** 活动名称 */
+    @ApiModelProperty("活动名称")
     private String name;
     /** 活动简介 */
+    @ApiModelProperty("活动简介")
     private String descr;
+    @ApiModelProperty("开始时间")
     /** 开始时间 */
     private String start;
     /** 结束时间 */
+    @ApiModelProperty("结束时间")
     private String end;
     /** 活动形式 */
+    @ApiModelProperty("活动形式")
     private String form;
     /** 活动地址 */
+    @ApiModelProperty("活动地址")
     private String address;
     /** 主办方 */
+    @ApiModelProperty("主办方")
     private String host;
     /** 浏览量 */
+    @ApiModelProperty("浏览量")
     private Integer readCount;
+    @ApiModelProperty("内容")
     private String content;
+    @ApiModelProperty("封面")
     private String cover;
 
+    @ApiModelProperty("是否结束")
     private Boolean isEnd;   // 活动是否结束
+    @ApiModelProperty("是否报名")
     private Boolean isSign;  // 是否报名
-
+    @ApiModelProperty("点赞数")
     private Integer likesCount;
+    @ApiModelProperty("收藏数")
     private Integer collectCount;
 
+    @ApiModelProperty("是否点赞")
     private Boolean isLike;
+    @ApiModelProperty("是否收藏")
     private Boolean isCollect;
-
+    @ApiModelProperty("用户id")
     private Integer userId;
 
     public Integer getUserId() {

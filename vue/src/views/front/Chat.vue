@@ -102,6 +102,7 @@ export default {
     let username = window.btoa(encodeURI(this.user.username))
     let avatar = window.btoa(encodeURI(this.user.avatar))
     client = new WebSocket(`ws://192.168.31.73:9090/chat/${username}/${avatar}`)
+    // client = new WebSocket(`ws://152.136.253.71:9090/chat/${username}/${avatar}`)
     client.onopen = () => {
       console.log('websocket open')
     }

@@ -154,7 +154,8 @@ export default {
         if (valid) {
           this.form.content = this.editor.txt.html()
           if(this.form.cover == null){
-            this.form.cover ="http://192.168.31.73:9090/files/1711346061888-bg9.jpg"
+            // this.form.cover ="http://192.168.31.73:9090/files/1711346061888-bg9.jpg"
+            this.form.cover = this.$baseUrl+'/files/1711346061888-bg9.jpg'
           }
           this.$request({
             url: this.form.id ? '/notice/update' : '/notice/add',
